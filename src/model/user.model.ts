@@ -1,7 +1,7 @@
 import { prop, pre, getModelForClass } from "@typegoose/typegoose";
 import mongoose from "mongoose";
 import bcrypt from 'bcryptjs';
-import config from 'config';
+import config from './../config';
 import jwt from 'jsonwebtoken';
 
 
@@ -51,8 +51,8 @@ export class User {
 		return jwt.sign({
 			_id: this._id,
 			role
-		}, config.get('jwtSecret'), {
-			expiresIn: config.get('jwtExpiresIn')
+		}, config.JWT_SECRET, {
+			expiresIn: config.JWT_EXPIRES_IN
 		});
 	}
 	//to check if the password is changed after issuing jwt token

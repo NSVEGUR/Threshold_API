@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import config from 'config';
+import config from './config';
 import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -18,7 +18,7 @@ const app = express();
 app.use(helmet());
 
 //Morgan to log requests in development
-if (config.get('node_env') === 'development') {
+if (config.NODE_ENV === 'development') {
 	app.use(morgan('dev'))
 }
 //Body Parser , Reading data from req.body

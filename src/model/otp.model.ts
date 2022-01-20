@@ -1,6 +1,6 @@
 import { prop, pre, getModelForClass } from "@typegoose/typegoose";
 import bcrypt from 'bcryptjs';
-import config from 'config';
+import config from './../config';
 
 
 @pre<Otp>('save', async function (next) {
@@ -23,7 +23,7 @@ export class Otp {
 	@prop({ required: true })
 	otp: string;
 
-	@prop({ required: true, default: Date.now, expires: config.get('otpExpiry') })
+	@prop({ required: true, default: Date.now, expires: config.OTP_EXPIRY_TIME })
 	expireAt: Date;
 
 	//To compare the encrypted password

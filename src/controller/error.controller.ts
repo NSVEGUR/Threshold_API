@@ -1,6 +1,6 @@
 import AppError from '../util/appError.util';
 import { Request, Response, NextFunction } from 'express';
-import config from 'config';
+import config from './../config';
 
 const handleCastErrorDB = (err: any) => {
 	const message = `Invalid ${err.path}: ${err.value}`;
@@ -53,9 +53,9 @@ export default function errorControler(err: any, req: Request, res: Response, ne
 	err.statusCode = err.statusCode || 500;
 	err.status = err.status || 'error';
 	console.log(err)
-	if (config.get('node_env') === 'development') {
+	if (config.NODE_ENV === 'development') {
 		sendErrorDev(err, res);
-	} else if (config.get('node_env') === 'production') {
+	} else if (config.NODE_ENV === 'production') {
 		let error = { ...err };
 		if (err.name === 'CastError') error = handleCastErrorDB(error);
 		if (err.code === 11000) error = handleDuplicateFieldsErrorDB(error);

@@ -1,11 +1,10 @@
-require('dotenv').config();
-import config from 'config';
 import mongoose from 'mongoose';
 import app from './app';
+import config from './config';
 
 
 //Connecting to MongoDB
-const db = config.get<string>('dbUrl').replace('<PASSWORD>', config.get('dbPassword'));
+const db = config.DBURL.replace('<PASSWORD>', config.DBPASSWORD);
 
 
 mongoose.connect(db).then(con => {
@@ -13,7 +12,7 @@ mongoose.connect(db).then(con => {
 })
 
 
-const port = config.get('port') || 8000;
+const port = config.PORT || 8000;
 
 
 //Listening to the server

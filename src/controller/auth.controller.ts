@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import config from 'config';
+import config from './../config';
 import { userType } from '../schema/user.schema';
 import { loginType } from '../schema/login.schema';
 import user from '../util/userType.util';
@@ -14,7 +14,7 @@ const signup = catchAsync(async function (
 ) {
 	const newUser: any = await createUser(req.body, next);
 	newUser.password = undefined;
-	if (config.get('node_env') == 'development')
+	if (config.NODE_ENV == 'development')
 		return res.status(201).json({
 			status: 'success',
 			message: 'user created successfully',
@@ -48,7 +48,7 @@ const login = catchAsync(async function (
 
 	currentUser.password = undefined;
 
-	if (config.get('node_env') == 'development')
+	if (config.NODE_ENV == 'development')
 		return res.status(201).json({
 			status: 'success',
 			message: 'loggedInSuccessfully',
