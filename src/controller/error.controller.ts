@@ -32,7 +32,8 @@ const sendErrorDev = (err: any, res: Response) => {
 	});
 }
 const sendErrorProd = (err: any, res: Response) => {
-	//Errors created by me
+
+	// Errors created by me
 	if (err.isOperational) {
 		res.status(err.statusCode).json({
 			status: err.status,
@@ -52,11 +53,10 @@ const sendErrorProd = (err: any, res: Response) => {
 export default function errorControler(err: any, req: Request, res: Response, next: NextFunction) {
 	err.statusCode = err.statusCode || 500;
 	err.status = err.status || 'error';
-	console.log(err)
 	if (config.NODE_ENV === 'development') {
 		sendErrorDev(err, res);
 	} else if (config.NODE_ENV === 'production') {
-		let error = { ...err };
+		let error = err;
 		if (err.name === 'CastError') error = handleCastErrorDB(error);
 		if (err.code === 11000) error = handleDuplicateFieldsErrorDB(error);
 		if (err.name === 'validationError') error = handleValidationErrorDB(error);
